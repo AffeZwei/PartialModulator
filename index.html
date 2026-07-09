@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+    content="width=device-width, initial-scale=1"> <!--maximum-scale=1-->
+    <title>Partial Modulator</title>
+
+    <link rel="stylesheet" href="style.css">  
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Partial Modulator</h1>
+
+<div class="control">
+    <label for="fundamental">Enter Frequency as Hz</label>
+
+        <input
+            id="fundamental"
+            type="number"
+            value="262.81"
+            min="0.01"
+            step="0.1">
+
+    
+</div>
+
+<div class="control">
+    <div class="dual-control-row">
+        <div class="dual-control">
+            <label for="note">OR as Note</label>
+            <input
+                id="note"
+                type="text"
+                value="C0"
+                spellcheck="false"
+                autocomplete="off">
+        </div>
+    </div>
+</div>
+
+<div class="control">
+    <label for="referenceA">Reference A (Hz)</label>
+
+        <input
+            id="referenceA"
+            type="number"
+            value="443.00"
+            min="300"
+            max="500"
+            step="1">
+  
+</div>
+
+<div class="modulation-row">
+
+    <label for="multiplier">Old Partial</label>
+    <input
+        id="multiplier"
+        type="number"
+        min="1"
+        value="1">
+
+    <span class="arrow">→</span>
+
+    <label for="newPartial">New Partial</label>
+    <input
+        id="newPartial"
+        type="number"
+        min="1"
+        value="7">
+
+    <button id="applyModulation">
+        Apply
+    </button>
+
+</div>
+
+    <div class="output">
+
+        Output Frequency
+
+        <span id="outputFrequency">
+            300 Hz
+        </span>
+
+    </div>
+
+    <div class="output">
+
+        Nearest Note
+
+        <span id="nearestNote">
+        </span>
+
+    </div>
+
+    <div class="control">
+
+        <label for="volume">Volume</label>
+
+        <input
+            id="volume"
+            type="range"
+            min="0"
+            max="100"
+            value="20">
+
+    </div>
+
+    <div class="buttons">
+
+        <button id="startButton">
+            Start
+        </button>
+
+        <button id="stopButton">
+            Stop
+        </button>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
