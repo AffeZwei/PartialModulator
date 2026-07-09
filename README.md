@@ -1,2 +1,2 @@
 # PartialModulator
-Takes a fundamental frequency (or note name), will play a given partial and display it's nearest note name with cent deviation. From that partial, type in a new partial and it will calculate a new fundamental from which to base a new harmonic series.
+Type in a fundamental frequency (or note name), type in a partial partial, this device will play that pitch and display it's nearest note name with cent deviation. From that partial, type in a new partial and it will calculate a new fundamental from which to base a new harmonic series. Once you hit "Apply", it will base any partial (in the field "old partial" on the changed fundamental. 
