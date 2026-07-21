@@ -142,11 +142,10 @@ input[type=text] {
 }
 
 .mod-button button {
-    width: 100%;
-    padding: 8px 4px;
+    width: 100%;    
     border: none;
     border-radius: 8px;
-    background: #ca724a;
+    background: #92b291;
     color: #111;
     font-weight: bold;
     font-size: 11px;
