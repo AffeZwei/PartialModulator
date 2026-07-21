@@ -121,7 +121,7 @@ input[type=text] {
     display:flex;
     align-items:center;
     gap:10px;
-    padding: 10px;
+    padding: 10px 1px;
     flex-wrap:nowrap;
 
 }
@@ -135,7 +135,7 @@ input[type=text] {
 
 .modulation-row input {
 
-    width:30px;
+    width:55px;
     text-align:center;
 
 }
