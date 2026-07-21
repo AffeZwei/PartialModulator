@@ -16,34 +16,9 @@
     <h1>Partial Modulator</h1>
 
 <div class="control">
-    <label for="fundamental">Enter Frequency as Hz</label>
-
-        <input
-            id="fundamental"
-            type="number"
-            value="16.463086"
-            min="0.01"
-            step="0.1">
-
-    
-</div>
-
-<div class="control">
-    <div class="dual-control-row">
-        <div class="dual-control">
-            <label for="note">OR as Note</label>
-            <input
-                id="note"
-                type="text"
-                value="C0"
-                spellcheck="false"
-                autocomplete="off">
-        </div>
-    </div>
-</div>
-
-<div class="control">
     <label for="referenceA">Reference A (Hz)</label>
+    <div class="a-spinner">
+    <button id="aMinus">−</button>
 
         <input
             id="referenceA"
@@ -52,76 +27,134 @@
             min="300"
             max="500"
             step="1">
-  
+
+    <button id="aPlus">+</button>
+    </div>  
+</div>
+
+<div class="control">
+    <div class="fundamental-row">
+        <div class="fundamental-input">
+            <label for="fundamental">Current Fundamental Hz</label>
+            <input
+                id="fundamental"
+                type="number"
+                value="32.926172"
+                min="0.01"
+                step="0.1">
+        </div>
+
+        <div class="preview-output">
+
+            Modulated Preview
+
+            <span id="modulatedFundamental">
+                16.463086
+            </span>
+        </div>
+    </div>    
+</div>
+
+<div class="control">
+    <div class="note-row">
+        <div class="note-input">
+            <label for="note">Current Fundamental Note</label>
+            <input
+                id="note"
+                type="text"
+                value="C1"
+                spellcheck="false"
+                autocomplete="off">
+        </div>
+        <div class="preview-output">
+
+            Modulated Preview 
+
+            <span id="modulatedNote">
+            </span>
+        </div>
+    </div>
+</div>
+
+<div class="control">
+    <label for="multiplier">Current Partial</label>
+        <div class="p-spinner">
+        <button id="multMinus">−</button>
+
+            <input
+                id="multiplier"
+                type="number"
+                min="1"
+                value="1">
+
+        <button id="multPlus">+</button>
+        </div>
+
+
 </div>
 
 <div class="modulation-row">
-
-    <label for="multiplier">Old Partial</label>
-    <input
-        id="multiplier"
-        type="number"
-        min="1"
-        value="1">
-
-    <span class="arrow">→</span>
-
-    <label for="newPartial">New Partial</label>
-    <input
-        id="newPartial"
-        type="number"
-        min="1"
-        value="7">
-
-    <button id="applyModulation">
-        Apply
-    </button>
+    <label for="newPartial">Modulate to Partial</label>
+        <div class="p-spinner">
+        <button id="modMinus">−</button>
+            <input
+                id="newPartial"
+                type="number"
+                min="1"
+                value="7">
+        <button id="modPlus">+</button>
+        </div>
+        <div class="mod-button">
+            <button id="applyModulation">
+                Make Current
+            </button>
+        </div>
 
 </div>
 
-    <div class="output">
+<div class="output">
 
-        Output Frequency
+    Output Current Partial
 
-        <span id="outputFrequency">
-            300 Hz
-        </span>
+    <span id="outputFrequency">
+        300 Hz
+    </span>
 
-    </div>
+</div>
 
-    <div class="output">
+<div class="output">
 
-        Nearest Note
+    Current Nearest Note
 
-        <span id="nearestNote">
-        </span>
+    <span id="nearestNote">
+    </span>
 
-    </div>
+</div>
 
-    <div class="control">
+<div class="control">
 
-        <label for="volume">Volume</label>
+    <label for="volume">Volume</label>
 
-        <input
-            id="volume"
-            type="range"
-            min="0"
-            max="100"
-            value="20">
+    <input
+        id="volume"
+        type="range"
+        min="0"
+        max="100"
+        value="20">
 
-    </div>
+</div>
 
-    <div class="buttons">
+<div class="buttons">
 
-        <button id="startButton">
-            Start
-        </button>
+    <button id="startButton">
+        Start
+    </button>
 
-        <button id="stopButton">
-            Stop
-        </button>
+    <button id="stopButton">
+        Stop
+    </button>
 
-    </div>
+</div>
 
 </div>
 

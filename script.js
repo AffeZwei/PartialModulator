@@ -13,13 +13,18 @@ const stopButton = document.getElementById("stopButton");
 /*
 const fundMinus = document.getElementById("fundMinus");
 const fundPlus = document.getElementById("fundPlus");
-
+*/
 const multMinus = document.getElementById("multMinus");
 const multPlus = document.getElementById("multPlus");
-
+const modMinus = document.getElementById("modMinus");
+const modPlus = document.getElementById("modPlus");
 const aMinus = document.getElementById("aMinus");
 const aPlus = document.getElementById("aPlus");
-*/
+const nearestNote = document.getElementById("nearestNote");
+const newPartialInput = document.getElementById("newPartial");
+const applyModulationButton = document.getElementById("applyModulation");
+const modulatedFundamentalDisplay = document.getElementById("modulatedFundamental");
+const modulatedNoteDisplay = document.getElementById("modulatedNote");
 
 const NOTE_INDEX = {
     C: 0,
@@ -64,10 +69,6 @@ const NOTE_NAMES = [
 
 ];
 
-const nearestNote = document.getElementById("nearestNote");
-const newPartialInput = document.getElementById("newPartial");
-const applyModulationButton = document.getElementById("applyModulation");
-
 let audioContext = null;
 let oscillator = null;
 let gainNode = null;
@@ -82,7 +83,13 @@ function getVolume() {
 let volume = getVolume();
 
 // ------------------------------ press and hold 
-/*
+function setupSpinner(button, input, direction, afterChange = updateDisplay) {
+
+    const change = () => {
+        changeValue(input, direction);
+        afterChange();
+    };
+
     button.addEventListener("click", (e) => {
         // Prevent the click after a long press from adding one more step
         if (button.dataset.held === "true") {
@@ -93,7 +100,7 @@ let volume = getVolume();
 
         change();
     });
-*/
+
     const startHold = () => {
 
         button.dataset.held = "false";
@@ -116,7 +123,8 @@ let volume = getVolume();
         clearInterval(holdInterval);
 
     };
-/*
+
+
     button.addEventListener("mousedown", startHold);
     button.addEventListener("touchstart", startHold);
 
@@ -125,10 +133,9 @@ let volume = getVolume();
 
     button.addEventListener("touchend", stopHold);
     button.addEventListener("touchcancel", stopHold);
-*/
+}
 
-
-function getFrequency() {
+    function getFrequency() {
     const fundamental = Number(fundamentalInput.value);
     const multiplier = Number(multiplierInput.value);
 
@@ -150,7 +157,7 @@ function frequencyToMidi(freq, referenceA) {
     return 69 + 12 * Math.log2(freq / referenceA);
 
 }
-
+/*
 function updateTransposeToggle() {
     const label = transposeEnabled ? "On" : "Off";
     transposeToggleButton.textContent = `Transpose: ${label}`;
@@ -162,7 +169,7 @@ function toggleTranspose() {
     updateTransposeToggle();
     updateDisplay();
 }
-
+*/
 function frequencyToNote(freq, referenceA) {
     const midiFloat = frequencyToMidi(freq, referenceA);
     const midi = Math.round(midiFloat);
@@ -188,10 +195,13 @@ function updateDisplay() {
     nearestNote.textContent = `${nearest.note} (${sign}${nearest.cents.toFixed(2)}¢)`;
 
     outputDisplay.textContent = freq.toFixed(2) + " Hz";
-
+    
     if (oscillator) {
         oscillator.frequency.setValueAtTime(freq, audioContext.currentTime);
     }
+
+    updateModulationPreview();
+    
 }
 
 function updateFromFrequency() {
@@ -265,6 +275,38 @@ function updateFromNote() {
 
     updateDisplay();
 
+}
+
+function updateModulationPreview() {
+
+    const oldFundamental = Number(fundamentalInput.value);
+    const oldPartial = Number(multiplierInput.value);
+    const newPartial = Number(newPartialInput.value);
+    const refA = Number(referenceAInput.value);
+
+    if (
+        !Number.isFinite(oldFundamental) ||
+        !Number.isFinite(oldPartial) ||
+        !Number.isFinite(newPartial) ||
+        oldPartial <= 0 ||
+        newPartial <= 0
+    ) {
+        modulatedFundamentalDisplay.textContent = "—";
+        modulatedNoteDisplay.textContent = "";
+        return;
+    }
+
+    const newFundamental =
+        oldFundamental * oldPartial / newPartial;
+
+    modulatedFundamentalDisplay.textContent =
+        newFundamental.toFixed(6) + " Hz";
+
+    const result = frequencyToNote(newFundamental, refA);
+    const sign = result.cents >= 0 ? "+" : "";
+
+    modulatedNoteDisplay.textContent =
+        `${result.note} (${sign}${result.cents.toFixed(2)}¢)`;
 }
 
 function applyModulation() {
@@ -343,7 +385,7 @@ async function startTone() {
         audioContext = new AudioContext();
     }
 
-    if (audioContext.state === "suspended"); {
+    if (audioContext.state === "suspended") {
         await audioContext.resume();
     }
 
@@ -405,6 +447,8 @@ referenceAInput.addEventListener("input", updateFromNote);
 
 multiplierInput.addEventListener("input", updateDisplay);
 
+newPartialInput.addEventListener("input", updateModulationPreview);
+
 applyModulationButton.addEventListener("click",applyModulation);
 
 volumeSlider.addEventListener("input", updateVolume);
@@ -412,6 +456,14 @@ volumeSlider.addEventListener("input", updateVolume);
 startButton.addEventListener("click", startTone);
 
 stopButton.addEventListener("click", stopTone);
+
+setupSpinner(multMinus, multiplierInput, -1);
+setupSpinner(multPlus, multiplierInput, 1);
+setupSpinner(modMinus, newPartialInput, -1, updateModulationPreview);
+setupSpinner(modPlus, newPartialInput, 1, updateModulationPreview);
+
+setupSpinner(aMinus, referenceAInput, -1, updateFromNote);
+setupSpinner(aPlus, referenceAInput, 1, updateFromNote);
 
 updateDisplay();
 
